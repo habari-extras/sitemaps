@@ -12,7 +12,7 @@ class Sitemaps extends Plugin {
 	 */
 	public function filter_rewrite_rules( $db_rules )
 	{
-		$db_rules[]= RewriteRule::create_url_rule( '"sitemap\.xml"', 'Sitemaps', 'Sitemap' );
+		$db_rules[]= RewriteRule::create_url_rule( '"sitemap.xml"', 'Sitemaps', 'Sitemap' );
 		return $db_rules;
 	}
 
@@ -52,14 +52,14 @@ class Sitemaps extends Plugin {
 		}
 		else {
 			//..or generate a new one
-			$xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>';
+			$xml = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->get_url() .'/sitemap.xsl"?><urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>';
 	
 			$xml = new SimpleXMLElement( $xml );
 					
 			// Retreive all published posts and pages from the database
 			$content['posts']= Posts::get( array( 'content_type' => 'entry', 'status' => Post::status( 'published' ), 'nolimit' => 1 ) );
 			$content['pages']= Posts::get( array( 'content_type' => 'page', 'status' => Post::status( 'published' ), 'nolimit' => 1 ) );
-			
+
 			// Add the index page first
 			$url = $xml->addChild( 'url' );
 			$url_loc = $url->addChild( 'loc', Site::get_url( 'habari' ) );
