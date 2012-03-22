@@ -31,8 +31,8 @@ class Sitemaps extends Plugin {
 		    case 'Sitemap':
 				self::Sitemap();
 				break;
-			case 'SitemapGz': 
-			 	self::SitemapGz(); 
+			case 'SitemapGz':
+			 	self::SitemapGz();
 			 	break;
 		}
     }
@@ -53,33 +53,33 @@ class Sitemaps extends Plugin {
      * Sitemap function called by the self `act` function.
      * Generates the `sitemap.xml.gz` file to output.
      */
-	public function SitemapGz() 
-	{ 
-	 	ob_clean(); 
+	public function SitemapGz()
+	{
+	 	ob_clean();
 	 	header( 'Content-Type: application/x-gzip' ); 
 	 	print gzencode( self::SitemapBuild() ); 
 	}
-	
-	public function SitemapBuild() 
+
+	public function SitemapBuild()
 	{
 		//return cached sitemap if exsist
 		if ( Cache::has( 'sitemap' ) ){
 		    $xml = Cache::get( 'sitemap' );
 		}
-		else {		
+		else {
 			$types = Options::get_group( __CLASS__ );
 		    //..or generate a new one
 			$xml = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->get_url() .'/sitemap.xsl"?><urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>';
 		    $xml = new SimpleXMLElement( $xml );
 
-			if ( $types['any'] || empty( $types ) ) {
+			if ( (array_key_exists( 'any', $type ) && $types['any']) || empty( $types ) ) {
 				// Retrieve all published content, regardless of the type
 				$content['any'] = Posts::get( array( 'content_type' => 'any', 'status' => 'published', 'nolimit' => 1 ) );
 			} else {
 				// Retreive all published content for select content types
 				$content['posts'] = Posts::get( array( 'content_type' => array_keys( $types, 1 ), 'status' => 'published', 'nolimit' => 1 ) );
 			}
-		    
+
 		    // Add the index page first
 		    $url = $xml->addChild( 'url' );
 		    $url_loc = $url->addChild( 'loc', Site::get_url( 'habari' ) );
@@ -97,7 +97,7 @@ class Sitemaps extends Plugin {
 		}
 		return $xml;
 	}
-	
+
 	/**
 	 * Add the configure option for the plugin
 	 */
@@ -106,7 +106,7 @@ class Sitemaps extends Plugin {
 		$actions['configure'] = _t( 'Configure' );
         return $actions;
     }
-	
+
 	/**
 	 * The configure form
 	 */
@@ -129,18 +129,18 @@ class Sitemaps extends Plugin {
 		$ui->set_option( 'success_message', _t( 'Options successfully saved.' ) );
 		$ui->out();
 	}
-	
+
 	/**
 	 * A bit of javascript for the configure page to enhance the functionality
 	 */
 	public function action_admin_footer( $theme )
-    {        		
+    {
 		if ( Controller::get_var( 'configure' ) == $this->plugin_id ) {
 			echo <<< SITEXML
 <script type="text/javascript">
-	if ( $('#include_any input:checkbox').is(':checked') ) { 
+	if ( $('#include_any input:checkbox').is(':checked') ) {
 		$('.sitexml input').attr('disabled', 'disabled');
-	} 
+	}
 
 	$('#include_any input:checkbox').change(function(){
 		if ( $('#include_any input:checkbox').is(':checked') ) {
@@ -153,8 +153,6 @@ class Sitemaps extends Plugin {
 SITEXML;
 		}
 	}
-	
-	
 
     /**
      * post_update_status action called when the post status field is updated.
