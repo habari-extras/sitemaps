@@ -72,7 +72,7 @@ class Sitemaps extends Plugin {
 			$xml = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->get_url() .'/sitemap.xsl"?><urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>';
 		    $xml = new SimpleXMLElement( $xml );
 
-			if ( (array_key_exists( 'any', $type ) && $types['any']) || empty( $types ) ) {
+			if ( (array_key_exists( 'any', $types ) && $types['any']) || empty( $types ) ) {
 				// Retrieve all published content, regardless of the type
 				$content['any'] = Posts::get( array( 'content_type' => 'any', 'status' => 'published', 'nolimit' => 1 ) );
 			} else {
