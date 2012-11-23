@@ -11,7 +11,7 @@
 	<help>
 		<value><![CDATA[
 		<p>This plugin will generate a <a href="http://sitemaps.org">sitemaps.org</a> compatible sitemap of your Habari blog for consumption by search engines like Ask.com, Google, Microsoft and Yahoo!.  A stylesheet is also included to make the sitemap visually appealing for the curious viewers.</p>
-		<p>This plugin will generate an uncompressed and gzip compressed sitemap.</p>
+		<p>This plugin will generate an uncompressed version that lives at <code>/sitemap.xml</code> and a gzip compressed version at <code>/sitemap.xml.gz</code>.</p>
 		<p>You can also configure which of your content types you wish to include or exclude from your sitemaps.</p>
 		]]></value>
 		</help>
