@@ -1,4 +1,7 @@
 <?php
+
+	namespace Habari;
+
 class Sitemaps extends Plugin {
     /**
      * Filter function called by the plugin hook `rewrite_rules`
