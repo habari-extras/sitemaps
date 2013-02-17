@@ -73,7 +73,7 @@ class Sitemaps extends Plugin {
 			$types = Options::get_group( __CLASS__ );
 		    //..or generate a new one
 			$xml = '<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="'.$this->get_url() .'/sitemap.xsl"?><urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>';
-		    $xml = new SimpleXMLElement( $xml );
+		    $xml = new \SimpleXMLElement( $xml );
 
 			if ( (array_key_exists( 'any', $types ) && $types['any']) || empty( $types ) ) {
 				// Retrieve all published content, regardless of the type
